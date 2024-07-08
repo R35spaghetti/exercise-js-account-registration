@@ -7,21 +7,42 @@ CreateForm().then(() => {
 async function CreateForm() {
     const accountForm = document.createElement("form");
     accountForm.setAttribute("method", "POST");
-    accountForm.setAttribute("action", "submit.php");
-    const nameInput = await CreateInputElement("text", "name", "name", "name", true);
-    const usernameInput = await CreateInputElement("text", "username", "username", "user name", true);
-    const passwordInput = await CreateInputElement("password", "password", "password", "password", true);
-    const confirmPasswordInput = await CreateInputElement("password", "confirmPassword", "confirmPassword", "repeat password", true);
-    const emailInput = await CreateInputElement("email", "email", "email", "email", true);
+    const nameInput = await CreateInputElement("text", "name", "name", true);
+    const usernameInput = await CreateInputElement("text", "username", "username", true);
+    const passwordInput = await CreateInputElement("password", "password", "password", true);
+    const confirmPasswordInput = await CreateInputElement("password", "confirmPassword", "repeat password", true);
+    const emailInput = await CreateInputElement("email", "email", "email", true);
+
+    const nameInputLabel = await CreateLabel(nameInput, "Name:");
+    const usernameInputLabel = await CreateLabel(usernameInput, "User name:");
+    const passwordInputLabel = await CreateLabel(passwordInput, "Password:");
+    const confirmPasswordInputLabel = await CreateLabel(confirmPasswordInput, "Confirm Password:");
+    const emailInputLabel = await CreateLabel(emailInput, "Email:");
+
     const submitButton = document.createElement("input");
     submitButton.setAttribute("type", "submit");
     submitButton.setAttribute("value", "Submit");
-
-    accountForm.append(nameInput);
-    accountForm.append(usernameInput);
-    accountForm.append(passwordInput);
-    accountForm.append(confirmPasswordInput);
-    accountForm.append(emailInput);
+    accountForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const data = {
+            name: nameInput.value,
+            username: usernameInput.value,
+            password: passwordInput.value,
+            confirmPassword: confirmPasswordInput.value,
+            email: emailInput.value,
+        };
+        await PresentData(data);
+    })
+    accountForm.appendChild(nameInputLabel);
+    accountForm.appendChild(nameInput);
+    accountForm.appendChild(usernameInputLabel);
+    accountForm.appendChild(usernameInput);
+    accountForm.appendChild(passwordInputLabel);
+    accountForm.appendChild(passwordInput);
+    accountForm.appendChild(confirmPasswordInputLabel);
+    accountForm.appendChild(confirmPasswordInput);
+    accountForm.appendChild(emailInputLabel);
+    accountForm.appendChild(emailInput);
     accountForm.append(submitButton);
     passwordInput.addEventListener("input", async () => {
         await ValidatePasswords();
@@ -53,7 +74,7 @@ async function ValidatePasswords() {
 
 }
 
-async function CreateInputElement(type, name, placeholder, label, required = false) {
+async function CreateInputElement(type, name, placeholder, required = false) {
     let input = document.createElement("input");
     input.setAttribute("type", type);
     input.setAttribute("name", name);
@@ -64,10 +85,21 @@ async function CreateInputElement(type, name, placeholder, label, required = fal
         input.required = true;
     }
 
-    let inputLabel = document.createElement("label");
-    inputLabel.textContent = label;
-    inputLabel.appendChild(input);
+    return input;
 
-    return inputLabel;
+}
 
+async function CreateLabel(inputId, labelText) {
+    const label = document.createElement("label");
+    label.textContent = labelText;
+    label.onclick = () => inputId.focus();
+
+    return label;
+}
+
+
+async function PresentData(data) {
+    const databox = document.querySelector('.data-box');
+    databox.innerHTML = `<p>${data.name} ${data.username} ${data.email} ${data.password}</p>`;
+    console.log(data);
 }
