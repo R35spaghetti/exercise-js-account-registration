@@ -6,6 +6,7 @@ CreateForm().then(() => {
 
 async function CreateForm() {
     const accountForm = document.createElement("form");
+    accountForm.id = "data-form";
     accountForm.setAttribute("method", "POST");
     const nameInput = await CreateInputElement("text", "name", "name", true);
     const usernameInput = await CreateInputElement("text", "username", "username", true);
