@@ -23,11 +23,35 @@ async function CreateForm() {
     accountForm.append(confirmPasswordInput);
     accountForm.append(emailInput);
     accountForm.append(submitButton);
+    passwordInput.addEventListener("input", async () => {
+        await ValidatePasswords();
+    });
+    confirmPasswordInput.addEventListener("input", async () => {
+        await ValidatePasswords();
+    });
     document.body.append(accountForm);
 
 
 }
 
+async function ValidatePasswords() {
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+    const submitButton = document.querySelector("input[type='submit']");
+
+
+    if (passwordInput.value.length < 8 || passwordInput.value !== confirmPasswordInput.value) {
+        passwordInput.classList.add("invalidPassword");
+        confirmPasswordInput.classList.add("invalidPassword");
+        submitButton.disabled = true;
+    } else {
+        passwordInput.classList.remove("invalidPassword");
+        confirmPasswordInput.classList.remove("invalidPassword");
+        submitButton.disabled = false;
+
+    }
+
+}
 
 async function CreateInputElement(type, name, placeholder, label, required = false) {
     let input = document.createElement("input");
