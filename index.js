@@ -100,7 +100,8 @@ async function CreateLabel(inputId, labelText) {
 
 
 async function PresentData(data) {
-    const databox = document.querySelector('.data-box');
+    const databox = document.getElementById("data-content");
+    databox.classList.add("show-data-content")
     databox.innerHTML = `<p>${data.name} ${data.username} ${data.email} ${data.password}</p>`;
     console.log(data);
 }
