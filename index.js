@@ -8,11 +8,11 @@ async function CreateForm() {
     const accountForm = document.createElement("form");
     accountForm.setAttribute("method", "POST");
     accountForm.setAttribute("action", "submit.php");
-    const nameInput = await CreateInputElement("text", "name", "name", "name");
-    const usernameInput = await CreateInputElement("text", "username", "username", "user name");
-    const passwordInput = await CreateInputElement("password", "password", "password", "password");
-    const confirmPasswordInput = await CreateInputElement("password", "confirmPassword", "confirmPassword", "repeat password");
-    const emailInput = await CreateInputElement("email", "email", "email", "email");
+    const nameInput = await CreateInputElement("text", "name", "name", "name", true);
+    const usernameInput = await CreateInputElement("text", "username", "username", "user name", true);
+    const passwordInput = await CreateInputElement("password", "password", "password", "password", true);
+    const confirmPasswordInput = await CreateInputElement("password", "confirmPassword", "confirmPassword", "repeat password", true);
+    const emailInput = await CreateInputElement("email", "email", "email", "email", true);
     const submitButton = document.createElement("input");
     submitButton.setAttribute("type", "submit");
     submitButton.setAttribute("value", "Submit");
@@ -29,12 +29,16 @@ async function CreateForm() {
 }
 
 
-async function CreateInputElement(type, name, placeholder, label) {
+async function CreateInputElement(type, name, placeholder, label, required = false) {
     let input = document.createElement("input");
     input.setAttribute("type", type);
     input.setAttribute("name", name);
     input.setAttribute("placeholder", placeholder);
     input.setAttribute("id", name);
+
+    if (required) {
+        input.required = true;
+    }
 
     let inputLabel = document.createElement("label");
     inputLabel.textContent = label;
