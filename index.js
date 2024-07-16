@@ -56,7 +56,7 @@ async function CreateForm() {
 
 }
 
-async function ValidatePasswords() {
+function ValidatePasswords() {
     const passwordInput = document.getElementById("password");
     const confirmPasswordInput = document.getElementById("confirmPassword");
     const submitButton = document.querySelector("input[type='submit']");
@@ -75,7 +75,7 @@ async function ValidatePasswords() {
 
 }
 
-async function CreateInputElement(type, name, placeholder, required = false) {
+function CreateInputElement(type, name, placeholder, required = false) {
     let input = document.createElement("input");
     input.setAttribute("type", type);
     input.setAttribute("name", name);
@@ -90,7 +90,7 @@ async function CreateInputElement(type, name, placeholder, required = false) {
 
 }
 
-async function CreateLabel(inputId, labelText) {
+function CreateLabel(inputId, labelText) {
     const label = document.createElement("label");
     label.textContent = labelText;
     label.addEventListener('click', function() {
@@ -101,7 +101,7 @@ async function CreateLabel(inputId, labelText) {
 }
 
 
-async function PresentData(data) {
+function PresentData(data) {
     const databox = document.getElementById("data-content");
     databox.classList.add("show-data-content")
     databox.innerHTML = `<p>${data.name} ${data.username} ${data.email} ${data.password}</p>`;
