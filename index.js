@@ -93,7 +93,9 @@ async function CreateInputElement(type, name, placeholder, required = false) {
 async function CreateLabel(inputId, labelText) {
     const label = document.createElement("label");
     label.textContent = labelText;
-    label.onclick = () => inputId.focus();
+    label.addEventListener('click', function() {
+        inputId.focus();
+    });
 
     return label;
 }
